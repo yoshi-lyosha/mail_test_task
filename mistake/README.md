@@ -2,9 +2,30 @@
 
 Сделан скрипт, проверяющий входные данные на соответствиям правилам.
 
-## Решение
+## Пример запуска
 
 Чтобы увидеть скрипт в работе, необходимо запустить parameters_generator_usage.py
+
+```
+python parameters_generator_usage.py
+>>> [
+>>>     {
+>>>         "params": {
+>>>             "login": "yoshi",
+>>>             "domain": "mail.ru",
+>>>             "password": "Qwe_121_ewQ",
+>>>             "first_name": "Alexey",
+>>>             "last_name": "Atanov",
+>>>             "lang": "ru_RU",
+>>>             "sex": "male",
+>>>             "phone": "89060936571",
+>>>             "birthday": "04-10-1994"
+>>>         },
+>>>         "errors": {}
+>>>     },
+>>>     ...
+>>> ]
+```
 
 ## Описание
 

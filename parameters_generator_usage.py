@@ -5,8 +5,9 @@ from config import generator_rules
 
 def use_parameters_generator(rules):
     output_dict = wrong_parameters_creator(rules)
-    print(json.dumps(output_dict, indent=4))
+    return output_dict
 
 
 if __name__ == '__main__':
-    use_parameters_generator(generator_rules)
+    parameters_dict = use_parameters_generator(generator_rules)
+    print(json.dumps(parameters_dict, indent=4))

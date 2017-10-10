@@ -2,12 +2,12 @@ import re
 import string
 import random
 
-_wrong_parameters_creators = []
-_wrong_type_parameter_creators = {}
+_wrong_parameters_creators = list()
+_wrong_type_parameter_creators = dict()
 
 
 def wrong_parameters_creator(parameters_table):
-    """ Generates invalid parameters """
+    """ Function that generates invalid parameters """
     output_list = list()
     parsed_parameters_table = _parse_parameters_table(parameters_table)
     [creator(parsed_parameters_table, output_list) for creator in _wrong_parameters_creators]
@@ -43,7 +43,7 @@ def _find_dict_value_in_rules_list(rules_list, rule_str, value_type):
     except TypeError as e:
         # adding information to an exception
         raise TypeError("{}; '{}' doesn't fit to '{}'".format(str(e), value_type, rule_str))
-    return rule_value if rule_value else None
+    return rule_value or None
 
 
 def _random_string_gen(size=None, chars=string.ascii_letters + string.digits, additional_chars_str=''):
@@ -67,8 +67,8 @@ def _wrong_parameters_creator_for_rule(func):
 def _create_output_parameters_dict():
     """ Creating dictionaries embedded in the dictionary to reuse the code """
     output_dict = dict()
-    output_dict['params'] = {}
-    output_dict['errors'] = {}
+    output_dict['params'] = dict()
+    output_dict['errors'] = dict()
     return output_dict
 
 

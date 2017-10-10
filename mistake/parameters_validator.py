@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 from collections import defaultdict
 
-_custom_types_checkers = {}
+_custom_types_checkers = dict()
 
 
 def parameters_validator(input_dict, rules):
