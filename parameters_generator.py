@@ -3,6 +3,7 @@ import string
 import random
 
 _wrong_parameters_creators = list()
+_custom_types_list = list()
 _wrong_type_parameter_creators = dict()
 
 
@@ -31,7 +32,11 @@ def _parse_rules_list(rules_list):
     rules_dict['allowed_values'] = _find_dict_value_in_rules_list(rules_list, 'allowed_values', list)
     rules_dict['default_value'] = _find_dict_value_in_rules_list(rules_list, 'default_value', str)
     rules_dict['necessity'] = list(filter(lambda var: var == 'required' or var == 'optional', rules_list))[0]
-    rules_dict['parameter_type'] = rules_list[0]
+    parameter_type = list(filter(lambda var: var in _custom_types_list, rules_list))
+    if parameter_type:
+        rules_dict['parameter_type'] = parameter_type[0]
+    else:
+        raise ValueError('Custom type is incorrect or not specified')
     return rules_dict
 
 
@@ -134,10 +139,12 @@ def _wrong_not_allowed_parameter_creator(parsed_parameters_table, output_list):
     output_dict = _create_output_parameters_dict()
     for parameter_name, rules_dict in parsed_parameters_table.items():
         if rules_dict['allowed_values']:
-            wrong_parameter = _random_string_gen()
-            if wrong_parameter not in rules_dict['allowed_values']:
-                output_dict['params'][parameter_name] = wrong_parameter
-                output_dict['errors'][parameter_name] = 'is not allowed value'
+            while True:
+                wrong_parameter = _random_string_gen()
+                if wrong_parameter not in rules_dict['allowed_values']:
+                    output_dict['params'][parameter_name] = wrong_parameter
+                    output_dict['errors'][parameter_name] = 'is not allowed value'
+                    break
         else:
             output_dict['params'][parameter_name] = rules_dict['default_value']
     output_list.append(output_dict)
@@ -150,6 +157,7 @@ def _wrong_type_parameters_gen(custom_type):
     """
     def inner_decorator(func):
         _wrong_type_parameter_creators[custom_type] = func
+        _custom_types_list.append(custom_type)
         return func
     return inner_decorator
 
